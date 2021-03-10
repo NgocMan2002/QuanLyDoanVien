@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 public class DoanVienTableModel extends AbstractTableModel {
 	private List<DoanVien> li = new ArrayList();
 	private String[] columnNames = { "Mã Đoàn Viên", "Chi Đoàn", "Chức Vụ", "Tên Đoàn Viên", "Ngày Sinh", "Giới Tính",
-			"Dien_Thoai" };
+			"Điện Thoại" };
 
 	public DoanVienTableModel(List<DoanVien> list){
          this.li = list;

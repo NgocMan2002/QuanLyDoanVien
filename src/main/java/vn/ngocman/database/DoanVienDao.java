@@ -56,6 +56,45 @@ public class DoanVienDao {
 			ex.printStackTrace();
 		}
 	}
+	
+	public static void suaDoanVien(DoanVien doanVien) {
+		try {
+			// connnect to database 'testdb'
+			Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+			// crate statement
+			Statement stmt = conn.createStatement();
+	        String sqlInsert = String.format("UPDATE [dbo].[DOAN_VIEN]\r\n"
+	        		+ "   SET [MA_CHI_DOAN] = '%s'\r\n"
+	        		+ "      ,[MA_CHUC_VU] = '%s'\r\n"
+	        		+ "      ,[TEN_DOAN_VIEN] = '%s'\r\n"
+	        		+ "      ,[NGAY_SINH] = '%s'\r\n"
+	        		+ "      ,[GIOI_TINH] = '%s'\r\n"
+	        		+ "      ,[DIEN_THOAI] = '%s'\r\n"
+	        		+ " WHERE [MA_DOAN_VIEN] = '%s'", doanVien.getMaChiDoan(), doanVien.getMaChucVu(), doanVien.getTenDoanVien(), doanVien.getNgaySinh(), doanVien.getGioiTinh(), doanVien.getDienThoai(), doanVien.getMaDoanVien());
+	        stmt.executeUpdate(sqlInsert);
+			stmt.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+
+	public static void xoaDoanVien(String maDoanVien) {
+		try {
+			// connnect to database 'testdb'
+			Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+			// crate statement
+			Statement stmt = conn.createStatement();
+	        String sqlDelete = String.format("DELETE FROM [dbo].[DOAN_VIEN]\r\n"
+	        		+ " WHERE [MA_DOAN_VIEN] = '%s'", maDoanVien);
+	        stmt.executeUpdate(sqlDelete);
+			stmt.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 
 	public static List<DoanVien> layDanhSachDoanVien() {
 		List<DoanVien> doanViens = new ArrayList<DoanVien>();
@@ -137,15 +176,14 @@ public class DoanVienDao {
 		try {
 			Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from CHI_DOAN");
-			ChiDoan chiDoan = null;
+			ResultSet rs = stmt.executeQuery("select * from DOAN_PHI");
+			DoanPhi doanPhi = null;
 			while (rs.next()) {
-				chiDoan = new ChiDoan();
-				chiDoan.setMaChiDoan(rs.getString(1));
-				chiDoan.setMaKhoa(rs.getString(2));
-				chiDoan.setTenChiDoan(rs.getString(3));
-				chiDoan.setDienThoai(rs.getString(4));
-				DoanPhi doanPhi = null;
+				doanPhi = new DoanPhi();
+				doanPhi.setMaPhieu(rs.getString(1));
+				doanPhi.setMaDoanVien(rs.getString(2));
+				doanPhi.setNgayNop(rs.getString(3));
+				doanPhi.setLiDoNop(rs.getString(4));
 				doanPhis.add(doanPhi);
 			}
 			conn.close();
@@ -155,24 +193,25 @@ public class DoanVienDao {
 		return doanPhis;
 	}
 	public static List<Khoa> layDanhSachKhoa() {
-		List<Khoa> Khoas = new ArrayList<Khoa>();
+		List<Khoa> khoas = new ArrayList<Khoa>();
 		try {
 			Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from CHI_DOAN");
-			ChiDoan Khoa = null;
+			ResultSet rs = stmt.executeQuery("select * from KHOAA");
+			Khoa Khoa = null;
 			while (rs.next()) {
-				Khoa = new ChiDoan();
-				Khoa.setMaChiDoan(rs.getString(1));
-				Khoa.setMaKhoa(rs.getString(2));
-				Khoa.setTenChiDoan(rs.getString(3));
-				Khoa.setDienThoai(rs.getString(4));
-				Khoas.addAll((Collection<? extends vn.ngocman.database.Khoa>) Khoa);
+				Khoa = new Khoa();
+				Khoa.setMaKhoa(rs.getString(1));
+				Khoa.setDienThoai(rs.getString(2));
+				Khoa.setTenKhoa(rs.getString(3));
+				khoas.add(Khoa);
+
 			}
 			conn.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return Khoas;
+		return khoas;
 	}
+
 }

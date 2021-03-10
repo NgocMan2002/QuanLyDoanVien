@@ -29,8 +29,8 @@ public class ChiDoan {
 	public void setDienThoai(String dienThoai) {
 		this.dienThoai = dienThoai;
 	}
-	public void add(ChiDoan chiDoan) {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public String toString() {
+		return tenChiDoan;
 	}
 }

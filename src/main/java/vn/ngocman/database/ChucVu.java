@@ -15,4 +15,8 @@ public class ChucVu {
 	public void setTenChucVu(String tenChucVu) {
 		this.tenChucVu = tenChucVu;
 	}
+	@Override
+	public String toString() {
+		return tenChucVu;
+	}
 }

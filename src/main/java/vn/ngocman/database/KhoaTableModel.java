@@ -22,7 +22,7 @@ public class KhoaTableModel extends AbstractTableModel {
 	}
 
 	public int getColumnCount() {
-		return 7;
+		return columnNames.length;
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
